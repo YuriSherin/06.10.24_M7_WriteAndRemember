@@ -3,7 +3,7 @@ def custom_write(file_name, strings):
     Функция записывает в файл file_name все строки из списка strings, каждая на новой строке
     и возвращает словарь strings_positions, где ключом будет кортеж (<номер строки>, <байт начала строки>),
     а значением - записываемая строка"""
-    d = {}          # словарь
+    strings_positions = {}          # словарь
     num_str = 1     # номер записываемой строки, начинается с 1
     num_tell = 0    # позиция файлового указателя относительно начала файла
 
@@ -11,12 +11,12 @@ def custom_write(file_name, strings):
         with open(file_name, 'w', encoding='utf8') as file:
             for line in strings:
                 num_tell = file.tell()          # получим позицию файлового указателя
-                d[(num_str, num_tell)] = line   # добавим данные в словарь
+                strings_positions[(num_str, num_tell)] = line   # добавим данные в словарь
                 file.write(line + '\n')         # сохраним данные в файл
                 num_str += 1                    # увеличим номер обрабатываемой строки
     except OSError as e:
         print(f'Ошибка записи данных в файл: {e}')
-    return  d
+    return  strings_positions
 
 if __name__ == '__main__':
     info = [
